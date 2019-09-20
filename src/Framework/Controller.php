@@ -45,6 +45,8 @@ abstract class Controller
             throw new Exception("{$file} not found");
         }
 
+        //return $this->container->get('twig')->render($path . DS . $view, $args);
+
         ob_start();
         require $file;
         $content =  ob_get_clean();

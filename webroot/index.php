@@ -1,9 +1,9 @@
 <?php
 
 define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', __DIR__ . DS . '..' . DS);
+define('ROOT', __DIR__ . DS . '..' . DS . 'src' . DS);
 define('VIEW_DIR', ROOT . 'View' . DS);
-define('CONF_DIR', ROOT . 'config' . DS);
+define('CONF_DIR', __DIR__ . DS . '..' . DS . 'config' . DS);
 define('ADMIN_DIR', VIEW_DIR.'Admin'.DS);
 
 use Controller\ErrorController;
@@ -14,18 +14,22 @@ use Framework\Request;
 use Framework\Router;
 use Framework\Session;
 use Framework\UserNotFoundException;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 require '../vendor/autoload.php';
 
-spl_autoload_register(function ($className){
-    $path = ROOT . str_replace('\\', DS, $className);
-    $path = "{$path}.php";
+// remove php autoloader
+//spl_autoload_register(function ($className){
+//    $path = ROOT . str_replace('\\', DS, $className);
+//    $path = "{$path}.php";
+//
+//    if (!file_exists($path)){
+//        throw new \Exception("{path} not found");
+//    }
+//    require $path;
+//});
 
-    if (!file_exists($path)){
-        throw new \Exception("{path} not found");
-    }
-    require $path;
-});
 
 try{
     $request = new Request($_GET, $_POST, $_SERVER);
@@ -57,8 +61,14 @@ try{
 
     $controller = new $controller();
     $controller->setContainer($container);
-
     $controller->setLayout($request);
+    //twig
+    $loader = new FilesystemLoader(VIEW_DIR);
+    $twig = new Environment($loader, [
+        //'cache' => 'compilation_cache',
+    ]);
+
+    $container->set('twig', $twig);
 
     $action = $action . 'Action';
 

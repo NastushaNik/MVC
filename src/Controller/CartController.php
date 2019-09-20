@@ -13,7 +13,7 @@ class CartController extends Controller
     public function indexAction(Request $request)
     {
         $currentCart = Session::get('cart', []);
-        dump($currentCart);
+        //dump($currentCart);
         $cartCount = array_count_values($currentCart);
         $currentCart = array_values(array_unique($currentCart));
         $cart = $this
