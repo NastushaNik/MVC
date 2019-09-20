@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/var-dumper": "^4.3",
+        "twig/twig": "^2.11"
+    }
+}

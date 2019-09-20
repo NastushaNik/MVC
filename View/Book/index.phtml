@@ -1,0 +1,21 @@
+<h1>Books</h1>
+
+
+<div class="row">
+    <?php foreach ($books as $book) : ?>
+        <div class="col-md-4">
+
+            <div class="card" style="height:300px; margin-top: 20px; padding: 20px;">
+<!--                <img class="card-img-top" src="img_avatar1.png" alt="Card image">-->
+                <div class="card-body">
+                    <h4 class="card-title"><?=$book->getTitle() ?></h4>
+                    <p class="card-text"><?=$book->getShortDescription() ?></p>
+                    <p class="card-text"><?=$book->getPrice() ?></p>
+                    <a href="/mvc/index.php?controller=cart&amp;action=addToCart&amp;id=<?=$book->getID() ?>" class="btn btn-primary">Add to cart</a>
+                    <a href="/mvc/index.php?controller=book&amp;action=show&amp;id=<?=$book->getID() ?>" class="btn btn-success">Details</a>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+
