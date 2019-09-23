@@ -3,18 +3,12 @@
 
 namespace Framework;
 
-
-
-
 use Exception;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
 {
-    const DEFAULT_LAYOUT = 'layout.phtml';
-    const ADMIN_LAYOUT = 'admin_layout.phtml';
-
-    protected $layout = self::DEFAULT_LAYOUT;
-
     protected $container;
 
     public function setContainer(ContainerInterface $container)
@@ -22,40 +16,20 @@ abstract class Controller
         $this->container = $container;
     }
 
-    public function setLayout(Request $request)
-    {
-        $uri = $request->getUri();
-
-        if(strpos($uri, '/mvc/admin') === 0){
-            $this->layout = self::ADMIN_LAYOUT;
-        }
-    }
-
     protected function render($view, array $args = [])
     {
-        extract($args);
+
+        $loader = new FilesystemLoader(VIEW_DIR);
+        $twig = new Environment($loader, [
+            //'cache' => 'compilation_cache',
+        ]);
 
         $path =  str_replace('Controller', '', get_class($this));
         $path = trim($path, '\\');
         $path = str_replace('\\', DS, $path);
-        $file = VIEW_DIR . $path . DS . $view;
+        $file = $path . DS . $view;
 
+        return $twig->render($file, $args);
 
-        if (!file_exists($file)){
-            throw new Exception("{$file} not found");
-        }
-
-        //return $this->container->get('twig')->render($path . DS . $view, $args);
-
-        ob_start();
-        require $file;
-        $content =  ob_get_clean();
-
-        ob_start();
-        require VIEW_DIR . $this->layout;
-
-        $html = ob_get_clean();
-
-        return new Response($html);
     }
 }

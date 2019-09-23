@@ -18,7 +18,7 @@ class BookController extends Controller
 
         $books = $repository->findAll();
 
-        return $this->render('index.phtml', [
+        return $this->render('index.html.twig', [
             'books' => $books
         ]);
     }
@@ -34,7 +34,7 @@ class BookController extends Controller
 
         $book = $repository->find($id);
 
-        return $this->render('show.phtml', [
+        return $this->render('show.html.twig', [
             'book' => $book
         ]);
     }

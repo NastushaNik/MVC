@@ -55,7 +55,7 @@ use Framework\Session;
 <div class="container">
     <div class="alert alert-info flash-box"><?=Session::getFlash() ?></div>
     <div class="starter-template">
-        <?=$content ?>
+        {% block content %}{% endblock %}
     </div>
 
 </div><!-- /.container -->

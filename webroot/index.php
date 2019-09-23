@@ -32,6 +32,12 @@ require '../vendor/autoload.php';
 
 
 try{
+    //twig
+    $loader = new FilesystemLoader(VIEW_DIR);
+    $twig = new Environment($loader, [
+        //'cache' => 'compilation_cache',
+        ]);
+
     $request = new Request($_GET, $_POST, $_SERVER);
     Session::start();
 
@@ -50,6 +56,7 @@ try{
 
     $container->set('router', $router);
     $container->set('repository_factory', $repositoryFactory);
+    $container->set('twig', $twig);
     $repositoryFactory->setPdo($pdo);
 
     $controller = $request->get('controller', 'default');
@@ -61,14 +68,6 @@ try{
 
     $controller = new $controller();
     $controller->setContainer($container);
-    $controller->setLayout($request);
-    //twig
-    $loader = new FilesystemLoader(VIEW_DIR);
-    $twig = new Environment($loader, [
-        //'cache' => 'compilation_cache',
-    ]);
-
-    $container->set('twig', $twig);
 
     $action = $action . 'Action';
 

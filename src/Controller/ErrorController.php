@@ -25,7 +25,7 @@ class ErrorController extends Controller
 
     public function error404Action(Request $request)
     {
-        return $this->render('error404.phtml');
+        return $this->render('error404.html.twig');
 
     }
 
@@ -33,7 +33,7 @@ class ErrorController extends Controller
     {
         $message = $this->exception->getMessage();
 
-        return $this->render('error.phtml', ['message' => $message]);
+        return $this->render('error.html.twig', ['message' => $message]);
     }
 
 }

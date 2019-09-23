@@ -18,6 +18,6 @@ class DefaultController extends Controller
             throw new AccessDeniedException();
         }
 
-        return $this->render('index.phtml');
+        return $this->render('index.html.twig');
     }
 }

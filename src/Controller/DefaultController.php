@@ -15,7 +15,7 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     {
-        return $this->render('index.phtml');
+        return $this->render('index.html.twig');
 
     }
 
@@ -45,6 +45,6 @@ class DefaultController extends Controller
             Session::setFlash('Invalid form.');
         }
 
-        return $this->render('feedback.phtml', ['form' => $form]);
+        return $this->render('feedback.html.twig', ['form' => $form]);
     }
 }

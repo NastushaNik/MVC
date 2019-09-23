@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<h1>Cart</h1>
+
+{% if cart is empty %}
+    <h3>Cart is empty</h3>
+{% else %}
+    {% for book in cart %}
+        {{ book.id }} {{ book.title }} {{ book.price }} -  ({{ book.cart|length }})  <br>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

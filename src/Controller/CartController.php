@@ -23,7 +23,7 @@ class CartController extends Controller
             ->findByIds($currentCart)
         ;
 
-        return $this->render('index.phtml', ['cart' => $cart, 'cartCount' => $cartCount]);
+        return $this->render('index.html.twig', ['cart' => $cart, 'cartCount' => $cartCount]);
     }
 
     public function addToCartAction(Request $request)
