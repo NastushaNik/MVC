@@ -1,0 +1,10 @@
+parameters:
+  database_user: 'root'
+  database_name: 'mvc'
+  database_host: 'localhost'
+  database_password: ~
+  uploads_dir: 'uploads'
+  noreply_email: 'nporeply@mvc.com'
+  some_api_key: '5csdcbe5d7gwhfclzhfu78'
+routing:
+

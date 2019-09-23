@@ -19,18 +19,6 @@ use Twig\Loader\FilesystemLoader;
 
 require '../vendor/autoload.php';
 
-// remove php autoloader
-//spl_autoload_register(function ($className){
-//    $path = ROOT . str_replace('\\', DS, $className);
-//    $path = "{$path}.php";
-//
-//    if (!file_exists($path)){
-//        throw new \Exception("{path} not found");
-//    }
-//    require $path;
-//});
-
-
 try{
     //twig
     $loader = new FilesystemLoader(VIEW_DIR);
@@ -38,19 +26,23 @@ try{
         //'cache' => 'compilation_cache',
         ]);
 
+    $config = Symfony\Component\Yaml\Yaml::parse(file_get_contents(CONF_DIR . 'config.yml'));
+    $parameters = $config['parameters'];
+
     $request = new Request($_GET, $_POST, $_SERVER);
     Session::start();
 
-    $dbConfig = require CONF_DIR . 'db.php';
+    $dsn = "mysql: host={$parameters['database_host']}; dbname={$parameters['database_name']}";
     $pdo = new \PDO(
-        $dbConfig['dsn'],
-        $dbConfig['user'],
-        $dbConfig['password']
+        $dsn,
+        $parameters['database_user'],
+        $parameters['database_password']
     );
 
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $container = new Container();
+    $container->setParameters($parameters);
     $router = new Router();
     $repositoryFactory = new RepositoryFactory();
 

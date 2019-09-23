@@ -8,14 +8,22 @@ class Container implements ContainerInterface
 {
 
     private $objects = [];
+    private $parameters = [];
+
+    private function getParameter($key)
+    {
+        return $this->getValue($this->$parameters, $key);
+    }
+
+    public function setParameters(array $array)
+    {
+        $this->parameters = $array;
+    }
 
     public function get($key)
     {
         // TODO: Implement get() method.
-        if (isset($this->objects[$key])){
-            return $this->objects[$key];
-        }
-        return null;
+        return $this->getValue($this->objects, $key);
     }
 
     /**
@@ -25,6 +33,14 @@ class Container implements ContainerInterface
     public function set($key, $object): void
     {
         $this->objects[$key] = $object;
+    }
+
+    private function getValue(array $array, $key)
+    {
+        if (isset($array[$key])){
+            return $array[$key];
+        }
+        return null;
     }
 
 
