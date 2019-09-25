@@ -7,7 +7,7 @@
     <h3>Cart is empty</h3>
 {% else %}
     {% for book in cart %}
-        {{ book.id }} {{ book.title }} {{ book.price }} -  ({{ book.cart|length }})  <br>
+        {{ book.id }} {{ book.title }} {{ book.price }} -  ({{ cartCount[book.id] }})  <br>
     {% endfor %}
 {% endif %}
 
