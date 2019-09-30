@@ -20,48 +20,52 @@ use Twig\Loader\FilesystemLoader;
 require '../vendor/autoload.php';
 
 try{
-    //twig
-    $loader = new FilesystemLoader(VIEW_DIR);
-    $twig = new Environment($loader, [
-        //'cache' => 'compilation_cache',
-        ]);
-
+    //config
     $config = Symfony\Component\Yaml\Yaml::parse(file_get_contents(CONF_DIR . 'config.yml'));
     $parameters = $config['parameters'];
+    $routing = $config['routing'];
 
+    //create request model and start session
     $request = new Request($_GET, $_POST, $_SERVER);
     Session::start();
 
+    //create container and set params from config
+    $container = new Container();
+    $container->setParameters($parameters);
+
+    // database connection
     $dsn = "mysql: host={$parameters['database_host']}; dbname={$parameters['database_name']}";
     $pdo = new \PDO(
         $dsn,
         $parameters['database_user'],
         $parameters['database_password']
     );
-
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $container = new Container();
-    $container->setParameters($parameters);
-    $router = new Router();
+    //ROUTER
+    $router = new Router($routing);
+    $router->match($request);
+
+    //create objects for container
     $repositoryFactory = new RepositoryFactory();
+    $repositoryFactory->setPdo($pdo);
+
+    //twig
+    $loader = new FilesystemLoader(VIEW_DIR);
+    $twig = new Environment($loader, [
+        //'cache' => 'compilation_cache',
+    ]);
 
     $container->set('router', $router);
     $container->set('repository_factory', $repositoryFactory);
     $container->set('twig', $twig);
-    $repositoryFactory->setPdo($pdo);
 
-    $controller = $request->get('controller', 'default');
-    $action = $request->get('action', 'index');
 
-    $uri = $request->getUri();
-    $adminNamespace = strpos($uri, '/mvc/admin') === 0 ? "Admin\\" : '';
-    $controller = '\\Controller\\' . $adminNamespace . ucfirst($controller) . 'Controller';
+    $controller = '\\Controller\\'.$router->getCurrentController();
+    $action = $router->getCurrentAction();
 
     $controller = new $controller();
     $controller->setContainer($container);
-
-    $action = $action . 'Action';
 
     if (!method_exists($controller, $action)){
         throw new Exception("{$action} not found.");
@@ -70,6 +74,7 @@ try{
     $content = $controller->$action($request);
 
 } catch (\Exception $e){
+    dump($e);die();
     $controller = new ErrorController($e);
     $content = $controller->errorAction();
 }

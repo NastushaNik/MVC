@@ -8,7 +8,7 @@ use Framework\Request;
 use Framework\Router;
 use Framework\Session;
 use Model\Entity\Feedback;
-use Model\FeedbackForm;
+use Model\Form\FeedbackForm;
 use Model\Repository\FeedbackRepository;
 
 class DefaultController extends Controller
@@ -32,7 +32,7 @@ class DefaultController extends Controller
                     $form->email,
                     $form->message
                 );
-                (new \Model\Repository\FeedbackRepository)->save($feedback);
+                (new FeedbackRepository)->save($feedback);
 
                 Session::setFlash('Saved.');
 

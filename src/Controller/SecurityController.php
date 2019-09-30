@@ -16,7 +16,6 @@ class SecurityController extends Controller
 {
 
     /**
-     * @throws UserNotFoundException
      * @throws \Exception
      */
     public function loginAction(Request $request)
@@ -49,7 +48,7 @@ class SecurityController extends Controller
 
                     $container
                         ->get('router')
-                        ->redirect('/mvc/index.php?controller=security&action=login');
+                        ->redirect('/sign-in');
                 }
 
                 Session::set('user', $user->getEmail());

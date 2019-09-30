@@ -47,6 +47,8 @@ class Request
 
     public function getUri()
     {
-        return $this->server('REQUEST_URI');
+        $uri = $this->server('REQUEST_URI');
+        $uri = explode('?', $uri);
+        return $uri[0];
     }
 }

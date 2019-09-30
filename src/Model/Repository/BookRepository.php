@@ -19,7 +19,38 @@ class BookRepository
 
     public function save(Book $book)
     {
-        global $pdo;
+        $pdo = $this->pdo;
+
+//        $data = [
+//            'id' => $book->getId(),
+//            'title' => $book->getTitle(),
+//            'description' => $book->getDescription(),
+//            'price' => $book->getPrice(),
+//            'is_active' => $book->getActive(),
+//            'category_id' => $book->getCategory(),
+//            'created' => $book->getMySqlCreated()
+//        ];
+//
+//        if ($data['id'] === null){
+//
+//        }else{
+//            $sth = $pdo->prepare("UPDATE book SET 'title' = :title,
+//                                                'description' = :description,
+//                                                'price' = :price,
+//                                                'is_active' = :is_active,
+//                                                'category_id' = :category_id,
+//                                                'created' = :'created'
+//                                                WHERE 'id' = :id");
+//
+//            $sth->bindParam(':title', $data['title'], PDO::PARAM_STR);
+//            $sth->bindParam(':description', $data['description'], PDO::PARAM_STR);
+//            $sth->bindParam(':is_active', $_POST['is_active'], PDO::PARAM_BOOL);
+//            $sth->bindParam(':category_id', $_POST['category_id'], PDO::PARAM_INT);
+//            $sth->bindParam(':created', $_POST['created'], PDO::PARAM_STR);
+//            $sth->bindParam(':price', $_POST['price'], PDO::PARAM_INT);
+//            $sth->execute();
+//        }
+
 
         //todo: implement - check Id: if id===null => insert, else update
     }

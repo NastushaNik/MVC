@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Model;
+namespace Model\Form;
 
 
 class FeedbackForm

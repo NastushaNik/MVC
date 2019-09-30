@@ -6,5 +6,36 @@ parameters:
   uploads_dir: 'uploads'
   noreply_email: 'nporeply@mvc.com'
   some_api_key: '5csdcbe5d7gwhfclzhfu78'
-routing:
 
+routing:
+  homepage:
+    pattern: /mvc/
+    controller: DefaultController
+    action: indexAction
+
+  books_list:
+    pattern: /mvc/books
+    controller: BookController
+    action: indexAction
+
+  feedback:
+    pattern: /mvc/feedback
+    controller: DefaultController
+    action: feedbackAction
+
+  sign_in:
+    pattern: /mvc/sign-in
+    controller: SecurityController
+    action: loginAction
+
+  book_item:
+    pattern: /mvc/book/{id}
+    controller: BookController
+    action: showAction
+    parameters:
+      id: '[0-9]+'
+
+  admin_homepage:
+    pattern: /mvc/admin
+    controller: Admin\DefaultController
+    action: indexAction
