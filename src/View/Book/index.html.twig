@@ -15,7 +15,7 @@
                     <p class="card-text">{{ book.shortDescription }}</p>
                     <p class="card-text">{{ book.price }}</p>
                     <a href="/mvc/index.php?controller=cart&amp;action=addToCart&amp;id={{ book.id }}" class="btn btn-primary">Add to cart</a>
-                    <a href="/mvc/index.php?controller=book&amp;action=show&amp;id={{ book.id }}" class="btn btn-success">Details</a>
+                    <a href="/mvc/book/{{ book.id }}" class="btn btn-success">Details</a>
                 </div>
             </div>
         </div>

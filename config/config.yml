@@ -28,6 +28,16 @@ routing:
     controller: SecurityController
     action: loginAction
 
+  logout:
+    pattern: /mvc/logout
+    controller: SecurityController
+    action: logoutAction
+
+  cart:
+    pattern: /mvc/cart
+    controller: CartController
+    action: indexAction
+
   book_item:
     pattern: /mvc/book/{id}
     controller: BookController
@@ -38,4 +48,9 @@ routing:
   admin_homepage:
     pattern: /mvc/admin
     controller: Admin\DefaultController
+    action: indexAction
+
+  admin_books:
+    pattern: /mvc/admin/books
+    controller: Admin\BookController
     action: indexAction

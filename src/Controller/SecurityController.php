@@ -52,7 +52,7 @@ class SecurityController extends Controller
                 }
 
                 Session::set('user', $user->getEmail());
-                $container->get('router')->redirect('/mvc/admin/index.php?controller=default&action=index');
+                $container->get('router')->redirect('/mvc/admin');
             }
 
             Session::setFlash('Invalid form');

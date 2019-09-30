@@ -39,7 +39,7 @@ class DefaultController extends Controller
                 $this
                     ->container
                     ->get('router')
-                    ->redirect('/mvc/index.php?controller=default&action=feedback');
+                    ->redirect('/mvc/feedback');
             }
 
             Session::setFlash('Invalid form.');

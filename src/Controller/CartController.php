@@ -37,7 +37,7 @@ class CartController extends Controller
         $currentCart[] = $id;
 
         Session::set('cart', $currentCart);
-        $this->container->get('router')->redirect('/mvc/index.php?controller=book&action=index');
+        $this->container->get('router')->redirect('/mvc/cart');
     }
 
     public function removeFromCartAction()
