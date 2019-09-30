@@ -51,4 +51,10 @@ class Request
         $uri = explode('?', $uri);
         return $uri[0];
     }
+
+    public function mergeGetWithArray(array $arr)
+    {
+        $_GET += $arr;
+        $this->get += $arr;
+    }
 }

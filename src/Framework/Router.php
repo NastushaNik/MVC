@@ -36,13 +36,29 @@ class Router
             $pattern = $route['pattern'];
 
             if (!empty($route['parameters'])){
-                foreach (){
-
+                foreach ($route['parameters'] as $name => $regex){
+                    $pattern = str_replace(
+                        '{' . $name . '}',
+                        '(' . $regex . ')',
+                        $pattern
+                    );
                 }
             }
 
-            if ($pattern == $uri){
+            $pattern = '@^' . $pattern . '$@'; // @ - delimiter.
+
+            if (preg_match($pattern, $uri, $matches)){
+                array_shift($matches);
+
+                if (!empty($route['parameters'])){
+                    $result = array_combine(
+                        array_keys($route['parameters']),
+                        $matches
+                    );
+                    $request->mergeGetWithArray($result);
+                }
                 $this->currentRoute = $route;
+
                 return;
             }
         }
