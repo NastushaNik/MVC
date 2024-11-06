@@ -1,7 +1,7 @@
 {
     "require": {
         "symfony/var-dumper": "^4.3",
-        "twig/twig": "^2.11",
+        "twig/twig": "^3.11",
         "symfony/yaml": "^4.3"
     },
     "autoload": {
